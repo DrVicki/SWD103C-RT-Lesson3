@@ -173,3 +173,45 @@ import './App.css';
 
 Each component has several lifecycle methods that you can override to run code at particular times in the process. Below is the lifecycle diagram of a component.
 
+![](https://github.com/DrVicki/SWD103C-RT-Lesson3/blob/main/images-lesson3/Screen%20Shot%202022-10-31%20at%206.01.02%20PM.png)
+
+These methods are called in the following order when an instance of a component is being created and inserted into the DOM:     
+
+  - `constructor()`: to initialize local state of the component or bind event handler methods to an instance.    
+  - `render()`: this method is called whenever the local state is changed or the props property of the component is changed.     
+  - `componentDidMount()`: this method is invoked when the component completely added into the `DOM`. Therefore, it is a good place to instantiate the network request (loading data from a remote endpoint) or to set up any subscriptions.
+  
+An update can be caused by changes to props or state. These methods are called in the following order when a component is being re-rendered:     
+
+  - `render()`: renders the UI based on current state of the component.     
+  - `componentDidUpdate()`: is invoked when finished updating `DOM`.
+  
+3.1.5.1   Component Lifecycle in Action 
+
+Let’s try the below example to understand clearly about the React component lifecycle.  In this example, please comment out the `React.StrictMode` code in the `index.js` file to get accurate logs on the console. When you're done debugging, be sure to uncomment it! 
+
+We’ll create a dummy data file for temporary use. 
+
+/public/posts.json 
+
+```
+[ { "slug": "getting-started-html", "title": "Getting Started with HTML", "image": "html.jpg", "excerpt": "HTML is the standard markup language for documents designed to be displayed in a web browser.", 
+
+"date": "2022-01-10", "isFeatured": false }, { "slug": "getting-started-css", "title": "Getting Started with CSS", "image": "css.jpg", "excerpt": "CSS is a style sheet language used for describing the presentation of a HTML document.", 
+  
+"date": "2022-02-05", "isFeatured": false }, { "slug": "mastering-javascript", "title": "Mastering JavaScript", "image": "js.jpg", "excerpt": "JavaScript is the most used programming language for web development.", 
+
+"date": "2022-03-30", "isFeatured": true }, { "slug": "mastering-react", "title": "Mastering React", "image": "react.jpg", "excerpt": "React is a a JavaScript library for building user interfaces.", 
+
+"date": "2022-05-16", "isFeatured": true } ] 
+```
+
+Prepare the images for the above posts. Please make the new “`images`” folder as a child of the “`public`” folder. You can download the “`images`” folder from my GitHub repository or make it yourself by following the below screenshot.
+
+
+
+
+
+
+
+
