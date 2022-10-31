@@ -134,7 +134,7 @@ this.setState({ lastName: "Bealman" });
 }}>Change name</button> 
 
 ```
-As we know `this.setState()` is an asynchronous function, we could use async-await to archive the same result with passing a callback function. 
+As we know `this.setState()` is an asynchronous function. We could use async-await to archive the same result with passing a callback function. 
 
 Example: 
 
@@ -147,6 +147,29 @@ Example:
 }}>Change name</button> 
 ```
 
-### 3.1.4   Unique Keys for List Items While manipulating a list of items, each child in the list should have a unique “key” property so that React can manage and update the items. Example: /src/App.js import { Component } from 'react'; import './App.css'; class App extends Component { constructor() { super(); this.state = { posts: [ { id: '1', title: 'Post 1' }, { id: '2', title: 'Post 2' }, { id: '3', title: 'Post 3' } ] } } render() { return ( <div className="App"> {this.state.posts.map(post => <h1 key={post.id}>{post.title}</h1>)} </div> ); } } export default App;
+### 3.1.4   Unique Keys for List Items 
 
-D. Truman, Neo. Web Development Crash Course - React JS Application Development: Build Scalable Websites with React, Redux JS, and Firebase - Create Your Own Website The Easy Way With Node React, Road To Learn React (pp. 49-54). Kindle Edition. 
+While manipulating a list of items, each child in the list should have a unique “`key`” property so that React can manage and update the items. 
+
+Example: 
+
+/src/App.js 
+
+```
+import { Component } from 'react'; 
+import './App.css'; 
+
+  class App extends Component { constructor() { super(); 
+  `this.state = { posts: [ { id: '1', title: 'Post 1' }, { id: '2', title: 'Post 2' }, { id: '3', title: 'Post 3' } ] } } 
+  render() { 
+  return ( <div className="App"> {this.state.posts.map(post => <h1 key={post.id}>{post.title}</h1>)} </div> ); 
+  } } 
+  
+  export default App;
+  ```
+  
+
+### 3.1.5 Component Lifecycle 
+
+Each component has several lifecycle methods that you can override to run code at particular times in the process. Below is the lifecycle diagram of a component.
+
