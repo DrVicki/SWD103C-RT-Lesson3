@@ -208,6 +208,91 @@ We’ll create a dummy data file for temporary use.
 
 Prepare the images for the above posts. Please make the new “`images`” folder as a child of the “`public`” folder. You can download the “`images`” folder from my GitHub repository or make it yourself by following the below screenshot.
 
+![](https://github.com/DrVicki/SWD103C-RT-Lesson3/blob/main/images-lesson3/Screen%20Shot%202022-10-31%20at%206.13.23%20PM.png)
+
+Example: 
+
+/src/App.js 
+
+```
+import { Component } from 'react'; 
+import './App.css'; 
+
+class App extends Component { constructor() { 
+
+console.log('constructor'); 
+
+  super(); this.state = { posts: [], searchString: '' 
+  } } 
+  componentDidMount() { 
+  fetch('/posts.json') 
+  .then(response => response.json()) 
+  .then(data => this.setState({ posts: data })); 
+  
+  console.log('componentDidMount - state =', this.state); 
+  }; 
+  
+  onSearchChangeHandler = (event) => { 
+  
+  const searchString = event.target.value.toLocaleLowerCase(); 
+  
+    this.setState({ searchString }); } 
+  
+  render() { console.log('render - state =', this.state); 
+  
+  const filteredPosts = this.state.posts.filter(post => { 
+  
+    return post.title.toLocaleLowerCase().includes(this.state.searchString); 
+    }); 
+    
+    console.log('render - filteredPosts =', filteredPosts); 
+    
+      return ( <div className="App"> <input type='search' onChange={this.onSearchChangeHandler} /> 
+      
+    {filteredPosts.map(post => <h1 key={post.slug}>{post.title}</h1>)
+    } 
+  </div> 
+  ); 
+  } 
+  } 
+  
+  export default App; 
+  
+  ```
+When the web page loaded, we can view the below logs in the console. 
+
+```
+constructor render - state = {posts: Array(0), searchString: ''} 
+
+render - filteredPosts = [] componentDidMount - state = {posts: Array(0), searchString: ''} 
+
+render - state = {posts: Array(4), searchString: ''} render - filteredPosts = (4) [{…}, {…}, {…}, {…}] 
+```
+
+This means that:
+
+  - The `constructor()` method was called only one time at the beginning.     
+  - Then the `render()` method was called with no post and an empty search string. As a result, the filtered post array is also empty.     
+  - Then the `componentDidMount()` method was called with the state unchanged. This function did loading post data from a remote endpoint using `fetch()`. When having data, it also updated post array in the state.     
+  - Since the state of posts was changed, the `render()` method was invoked again. At this time, the filtered posts were same as the posts in state since the search string was still empty. Finally, it rendered filtered posts onto the web page. Now, try to slowly enter “`h`” and then “`t`” into the search box. These logs will be added into the console: 
+  
+```  
+render - state = {posts: Array(4), searchString: 'h'} render - filteredPosts = (2) [{…}, {…}] 
+
+render - state = {posts: Array(4), searchString: 'ht'} render - filteredPosts = [{…}] 
+```
+
+It means that:     
+
+  - The `searchString` state was changed to “`h`” so the `render()` method was called. At the time, there were 2 posts in the filtered array so we saw 2 posts on the web page.     
+  - Then, the `searchString` state was changed to “`ht`” so the `render()` method was called again. At the time, there was 1 post in the filtered array so we saw 1 post on the web page.  
+  
+Inside the `onChange` callback event of the `input` element, we shouldn’t write an anonymous function which will be re-created every time the `render()` method is called. This makes the `App` component less efficient.  The `onSearchChangeHandler()` method is built once when initialize the component for the first time as it’s a method. Then, whenever the `render()` runs, it just refers to the method.
+
+
+
+
+
 
 
 
